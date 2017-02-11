@@ -54,8 +54,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="categorie", type="string", length=255)
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="articles")
      */
     private $categorie;
 

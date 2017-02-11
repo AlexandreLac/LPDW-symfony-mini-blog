@@ -29,10 +29,6 @@ class Category
      */
     private $nom;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Article", mappedBy="categorie")
-     */
-    private $articles;
 
     public function __construct()
     {

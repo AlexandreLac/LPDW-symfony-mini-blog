@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+{{ form_start(form, {'method': 'POST','attr':{'class':'col s12'}}) }}
+	<h2 class="style">Création d'un tag</h1>
+	<div class="row">
+		<div class="input-field col s6">
+			{{ form_label(form.nom) }}
+			<!-- </br> -->
+			{{ form_widget(form.nom, {'attr':{'class':'validate'}}) }}
+		</div>
+	</div>
+{{ form_end(form) }}
+</div>
+{% endblock %}

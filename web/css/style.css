@@ -1,0 +1,18 @@
+div.header-site{
+   background-color: #000000;
+   background-image: url(../images/accueil-font.jpg) ; 
+   background-position: 100% 55%;
+   background-repeat: no-repeat center fixed;
+   width: 100%;
+   height: 400px;	
+   margin-top: -21px;
+}
+.header-title{
+	color: blue;
+	text-align: center;
+	vertical-align: center;
+}
+h2{
+   text-align: center;
+   color: green;
+}
