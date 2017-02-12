@@ -70,9 +70,20 @@ class Article
      */
     private $tags;
 
+    /**
+     * Many User have Many Commentaires.
+     * @ORM\ManyToMany(targetEntity="Commentaire")
+     * @ORM\JoinTable(name="article_commentaires",
+     *      joinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="commentaires_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $commentaires;
+
     public function __construct() {
         $this->tags = new ArrayCollection();
         $this->setDateParution(new \DateTime());
+        $this->commentaires = new ArrayCollection();
     }
 
 
@@ -232,6 +243,34 @@ class Article
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set Commentaires
+     *
+     * @param string $Commentaires
+     *
+     * @return Article
+     */
+    public function setCommentaires($commentaires)
+    {
+        $this->commentaires = $commentaires;
+
+        return $this;
+    }
+
+    public function addCommentaires($commentaire){
+        $this->commentaires[] = $commentaire;
+        return $this;
+    }
+    /**
+     * Get Commentaires
+     *
+     * @return string
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }
 

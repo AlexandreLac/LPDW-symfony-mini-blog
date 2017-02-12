@@ -8,10 +8,11 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Tag;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Commentaire;
 use AppBundle\Form\TagType;
 use AppBundle\Form\ArticleType;
 use AppBundle\Form\CategoryType;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use AppBundle\Form\CommentaireType;
 
 class DefaultController extends Controller
 {
@@ -114,6 +115,36 @@ class DefaultController extends Controller
         }
         return $this->render('AppBundle:article:new.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/articles/{id}", name="detail_articles")
+     */
+    public function detailArticleAction(Request $request, $id)
+    {
+        $article = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Article')
+            ->findOneById($id);
+
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentaire = $form->getData();
+            $article->addCommentaires($commentaire);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commentaire);
+            $em->flush($commentaire);
+            $em->persist($article);
+            $em->flush($article);
+
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('AppBundle:article:detail.html.twig',[
+            'article' => $article,
+            'form' => $form->createView()   
         ]);
     }
 }

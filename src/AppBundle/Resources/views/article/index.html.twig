@@ -21,7 +21,7 @@
 			{% for article in articles%}
 				<tr>
 					<td><a href="articles/{{article.id}}">{{article.nom}}</a></td>
-					<td></td>
+					<td>{{article.categorie.nom}}</td>
 					<td></td>
 					<td>{{article.dateParution|date('d-m-Y')}}</td>
 				</tr>
