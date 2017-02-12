@@ -32,14 +32,9 @@ class Tag
      */
     private $nom;
 
-    /**
-     * Manyn Tag have Many Article.
-     * @ORM\ManyToMany(targetEntity="Article", inversedBy="tags")
-     */
-    private $articles;
 
     public function __construct() {
-        $this->articles = new ArrayCollection();
+        // $this->articles = new ArrayCollection();
     }
 
     /**

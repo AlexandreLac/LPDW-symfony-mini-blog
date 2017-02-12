@@ -11,6 +11,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Form\TagType;
 use AppBundle\Form\ArticleType;
 use AppBundle\Form\CategoryType;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class DefaultController extends Controller
 {
@@ -19,8 +20,39 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('AppBundle:home:home.html.twig');
+        // $article = $this
+        //     ->getDoctrine()
+        //     ->getRepository('AppBundle:Tag')
+        //     ->getTag();
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT a
+            FROM AppBundle:Article a
+            ORDER BY a.dateParution DESC'
+        )->setMaxResults(5);
+
+        $articles = $query->getResult();
+        return $this->render('AppBundle:home:home.html.twig',[
+            'articles' => $articles
+        ]);
+    }
+
+    /**
+     * @Route("/articles", name="articles")
+     */
+    public function allArticlesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT a
+            FROM AppBundle:Article a
+            ORDER BY a.dateParution DESC'
+        );
+        $articles = $query->getResult();
+        
+        return $this->render('AppBundle:article:index.html.twig',[
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -73,6 +105,8 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
+            // dump($article);
+            // die();
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush($article);

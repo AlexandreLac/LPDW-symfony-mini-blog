@@ -62,8 +62,11 @@ class Article
 
      /**
      * Many Articles have Many Tags.
-     * @ORM\ManyToMany(targetEntity="Tag", mappedBy="articles")
-     * @ORM\JoinTable(name="articles_tags")
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+     * @ORM\JoinTable(name="articles_tags",
+     *      joinColumns={@ORM\JoinColumn(name="articles_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tags_id", referencedColumnName="id")}
+     *      )
      */
     private $tags;
 
@@ -212,11 +215,15 @@ class Article
      */
     public function setTags($tags)
     {
-        $this->tags->add($tags);
+        $this->tags = $tags;
 
         return $this;
     }
 
+    public function addTags($tags){
+        $this->tags[] = $tags;
+        return $this;
+    }
     /**
      * Get tags
      *

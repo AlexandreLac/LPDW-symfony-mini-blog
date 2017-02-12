@@ -1,8 +1,24 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 {% endblock %}
 
 {% block body %}
-
+<div class="articles">
+	{% for article in articles%}
+	<div class="col-md-10 col-md-offset-1">
+		
+		<div class="panel panel-primary ">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">{{article.nom}}</h3>
+		  </div>
+		  <div class="panel-body">
+		    {{article.contenu|raw}}
+		  </div>
+		  <div class="panel-footer">Date de parution : {{article.dateParution|date('d-m-Y')}}</div>
+		</div>
+	</div>
+	{% endfor %}
+	<a class="btn btn-primary btn-lg" href="articles" role="button">Tout les articles</a>
+</div>
 {% endblock %}
