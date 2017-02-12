@@ -42,4 +42,44 @@ class DefaultController extends Controller
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/newcategory", name="newcategory")
+     */
+    public function newCategoryAction(Request $request)
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush($category);
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('AppBundle:category:new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/newarticle", name="newarticle")
+     */
+    public function newArticleAction(Request $request)
+    {
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush($article);
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('AppBundle:article:new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }

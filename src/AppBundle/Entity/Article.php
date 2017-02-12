@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -53,8 +54,8 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="categorie", type="string", length=255)
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="articles")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $categorie;
 
@@ -68,6 +69,7 @@ class Article
 
     public function __construct() {
         $this->tags = new ArrayCollection();
+        $this->setDateParution(new \DateTime());
     }
 
 
@@ -199,6 +201,30 @@ class Article
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param string $tags
+     *
+     * @return Article
+     */
+    public function setTags($tags)
+    {
+        $this->tags->add($tags);
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
 

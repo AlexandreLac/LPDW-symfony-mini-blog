@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+{{ form_start(form, {'method': 'POST','attr':{'class':'col s12'}}) }}
+	<h2 class="style">Création d'une categorie</h1>
+	<div class="row">
+		<div class="input-field col s6">
+			{{ form_label(form.nom) }}
+			{{ form_widget(form.nom, {'attr':{'class':'validate'}}) }}
+		</div>
+		<div class="input-field col s6">
+			{{ form_widget(form.categorie) }}
+			{{ form_label(form.categorie) }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s6">
+			{{form_widget(form.tags)}}
+			{{form_label(form.tags)}}
+		</div>
+	</div>
+	<div class="row">
+		 <div class="col s8 ">
+			{{ form_row(form.contenu) }}
+		</div>
+	</div>		
+	{{form_widget(form.submit, {'label':'Creer','attr':{'class':'btn waves-effect waves-light'}})}}
+{{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+     $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -25,10 +26,15 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=false, unique=true)
      */
     private $nom;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="categorie")
+     */
+    private $articles;
 
     public function __construct()
     {
@@ -67,6 +73,30 @@ class Category
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set article
+     *
+     * @param string $articles
+     *
+     * @return Article
+     */
+    public function setArticles($articles)
+    {
+        $this->articles->add($articles);
+
+        return $this;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return string
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }
 

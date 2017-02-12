@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Tag
@@ -25,7 +27,8 @@ class Tag
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=false, unique=true)
+     * 
      */
     private $nom;
 
