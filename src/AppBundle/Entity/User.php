@@ -4,12 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -40,6 +40,21 @@ class User implements UserInterface
      * @ORM\Column(name="role", type="string")
      */
     private $role;
+
+    /**
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="auteur")
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
     /**
      * Get the value of Id
@@ -154,11 +169,17 @@ class User implements UserInterface
     }
 
     /**
-     * @return string The username
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return Users
      */
-    public function getUsername()
+    public function setUsername($username)
     {
-        return $this->email;
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -166,5 +187,58 @@ class User implements UserInterface
     public function eraseCredentials()
     {
 
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set article
+     *
+     * @param string $articles
+     *
+     * @return Article
+     */
+    public function setArticles($articles)
+    {
+        $this->articles->add($articles);
+
+        return $this;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return string
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

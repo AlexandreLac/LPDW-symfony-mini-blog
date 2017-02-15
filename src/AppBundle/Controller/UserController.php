@@ -15,7 +15,16 @@ class UserController extends Controller
      */
     public function loginAction(Request $request)
     {
-        return $this->render('AppBundle:security:login.html.twig');
+         $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        $lastUsername = $authenticationUtils->getLastUsername();
+        return $this->render('AppBundle:security:login.html.twig', array(
+            'error' => $error,
+            'last_username' => $lastUsername
+        ));
     }
 
     /**
@@ -31,7 +40,7 @@ class UserController extends Controller
      */
     public function adminAction()
     {
-        return new Response('<html><body>Admin page!</body></html>');
+        return $this->render('AppBundle:admin:index.html.twig');
     }
 
     /**
@@ -47,7 +56,7 @@ class UserController extends Controller
             $query = $em->createQuery("SELECT COUNT(u) FROM AppBundle:User u");
             $usersCount = $query->getSingleScalarResult();
 
-            $role = ($usersCount == 0) ? 'admin' : 'user';
+            $role = ($usersCount == 0) ? 'ROLE_ADMIN' : 'ROLE_USER';
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setRole($role);

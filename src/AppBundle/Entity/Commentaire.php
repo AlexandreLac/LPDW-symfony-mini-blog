@@ -31,9 +31,9 @@ class Commentaire
     private $contenu;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="auteur", type="integer", nullable=true)
+     * @ORM\Column(name="auteur", type="string")
      */
     private $auteur;
 

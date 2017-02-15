@@ -57,7 +57,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/newtag", name="newtag")
+     * @Route("/administration/newtag", name="newtag")
      */
     public function newTagAction(Request $request)
     {
@@ -77,7 +77,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/newcategory", name="newcategory")
+     * @Route("/administration/newcategory", name="newcategory")
      */
     public function newCategoryAction(Request $request)
     {
@@ -97,7 +97,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/newarticle", name="newarticle")
+     * @Route("/administration/newarticle", name="newarticle")
      */
     public function newArticleAction(Request $request)
     {
@@ -106,8 +106,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
-            // dump($article);
-            // die();
+            $article->setAuteur($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush($article);

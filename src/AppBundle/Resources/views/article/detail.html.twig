@@ -9,7 +9,9 @@
 		<div class="col-sm-8 blog-main">
 			<div class="blog-post">
 				<h2 class="blog-post-title">{{article.nom}}</h2>
-				<p class="blog-post-meta">{{article.dateParution|date('d-m-Y')}} par <a href="#"></a></p>
+				<p class="blog-post-meta">{{article.dateParution|date('d-m-Y')}} par </p>
+				<p>Tags : {% for tag in article.tags %} {{tag.nom}} {% endfor %}</p>
+				<p>Catégorie : {{article.categorie.nom }} </p>
 				{{article.contenu|raw}}
 			</div>
 		</div>
@@ -19,12 +21,26 @@
 		<div class="block-content">
 			{{ form_start(form, {'method': 'POST','attr':{'class':'col s12'}}) }}
 				<div class="row">
-					 <div class="col s8 ">
+					<div class="col s5">
+						{{ form_row(form.auteur) }}
+					</div>	
+					<div class="col s8 ">
 						{{ form_row(form.contenu) }}
 					</div>
 				</div>
 				{{form_widget(form.submit, {'label':'Creer','attr':{'class':'btn waves-effect waves-light'}})}}
 			{{ form_end(form)}}
+		</div>
+		<div class="block-content">
+			<div class="row">
+					 <div class="col s8 ">
+						{% for commentaire in article.commentaires%}
+							<p>{{commentaire.auteur}}</p>
+							<p>{{commentaire.contenu}}</p>
+							<p>{{commentaire.dateParution|date('d-m-Y')}}</p>
+						{% endfor %}
+					</div>
+				</div>
 		</div>
 	</div>
 </div>

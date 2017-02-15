@@ -19,3 +19,11 @@ h2{
 .articles{
    margin-top: 10px;
 }
+
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+}
+
+.navbar li { color: #000 }
