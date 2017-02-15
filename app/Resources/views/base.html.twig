@@ -25,10 +25,18 @@
         <div class="navbar-collapse collapse">
           
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="">Active</a></li>
+            <li><a href="/">Accueil</a></li>
             <li><a href="articles">Articles</a></li>
             <li><a href="">Categorie</a></li>
-            <li><a href="login">Login</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="administration">Admin</a></li>
+            {% endif %}
+            {% if app.user %}
+                <li><a>{{app.user.username}}</a></li>
+            {% else %}
+                <li><a href="login">Login</a></li>
+                <li><a href="register">S'inscrire</a></li>
+            {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
