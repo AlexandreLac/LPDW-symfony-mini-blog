@@ -21,18 +21,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // $article = $this
-        //     ->getDoctrine()
-        //     ->getRepository('AppBundle:Tag')
-        //     ->getTag();
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-            'SELECT a
-            FROM AppBundle:Article a
-            ORDER BY a.dateParution DESC'
-        )->setMaxResults(5);
+        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getHome()->getResult();
 
-        $articles = $query->getResult();
         return $this->render('AppBundle:home:home.html.twig',[
             'articles' => $articles
         ]);
@@ -43,13 +33,7 @@ class DefaultController extends Controller
      */
     public function allArticlesAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-            'SELECT a
-            FROM AppBundle:Article a
-            ORDER BY a.dateParution DESC'
-        );
-        $articles = $query->getResult();
+        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getAll()->getResult();
         
         return $this->render('AppBundle:article:index.html.twig',[
             'articles' => $articles
@@ -69,7 +53,7 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($tag);
             $em->flush($tag);
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('admin');
         }
         return $this->render('AppBundle:tag:new.html.twig', [
             'form' => $form->createView()
@@ -89,7 +73,7 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush($category);
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('admin');
         }
         return $this->render('AppBundle:category:new.html.twig', [
             'form' => $form->createView()
@@ -110,7 +94,7 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush($article);
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('admin');
         }
         return $this->render('AppBundle:article:new.html.twig', [
             'form' => $form->createView()
@@ -118,7 +102,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/articles/{id}", name="detail_articles")
+     * @Route("/article/{id}", name="detail_article")
      */
     public function detailArticleAction(Request $request, $id)
     {
@@ -145,5 +129,44 @@ class DefaultController extends Controller
             'article' => $article,
             'form' => $form->createView()   
         ]);
+    }
+
+    /**
+     * @Route("categorie/{id}", name="detail_categorie")
+     */
+    public function detailCategorieAction(Request $request, $id)
+    {
+        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getArticleByCategorie($id)->getResult();
+        return $this->render('AppBundle:category:list.html.twig',[
+            'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("categories", name="categories")
+     */
+    public function allCategoriesAction(Request $request)
+    {
+        $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->getAllCategories()->getResult();
+        return $this->render('AppBundle:category:index.html.twig',[
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * @Route("/administration/delete/{entity}/{id}", name="delete_entity")
+     */
+    public function deleteEntityAction(Request $request, $entity, $id)
+    {
+        if(in_array($entity, array('Tag','Article','Category'))){
+            $delete = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:'.$entity)
+                ->findOneById($id);
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($delete);
+            $em->flush($delete);            
+        }
+        return $this->redirectToRoute('admin');
     }
 }

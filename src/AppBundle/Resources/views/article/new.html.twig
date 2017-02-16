@@ -1,20 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'form.html.twig' %}
 
 {% block body %}
 <div class="row">
 {{ form_start(form, {'method': 'POST','attr':{'class':'col s12'}}) }}
-	<h2 class="style">Création d'une categorie</h1>
+	<h2 class="style">Création d'un Article</h1>
 	<div class="row">
 		<div class="input-field col s6">
 			{{ form_label(form.nom) }}
 			{{ form_widget(form.nom, {'attr':{'class':'validate'}}) }}
 		</div>
 		<div class="input-field col s6">
-			{{ form_widget(form.categorie) }}
-			{{ form_label(form.categorie) }}
+			{{ form_widget(form.dateParution, {'attr':{'class':'datepicker'}}) }}
+			{{ form_label(form.dateParution) }}
 		</div>
 	</div>
 	<div class="row">
+		<div class="input-field col s6">
+			{{ form_widget(form.categorie) }}
+			{{ form_label(form.categorie) }}
+		</div>
 		<div class="input-field col s6">
 			{{form_widget(form.tags)}}
 			{{form_label(form.tags)}}
@@ -34,6 +38,10 @@
 <script>
      $(document).ready(function() {
         $('select').material_select();
+        $('.datepicker').pickadate({
+		    selectMonths: true, // Creates a dropdown to control month
+		    selectYears: 15 // Creates a dropdown of 15 years to control year
+		});
     });
 </script>
 {% endblock %}

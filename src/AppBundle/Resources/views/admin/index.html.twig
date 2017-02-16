@@ -1,6 +1,53 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<a class="btn btn-primary btn-lg" href="administration/newarticle" role="button">Crée un article</a>
-<a class="btn btn-primary btn-lg" href="administration/newtag" role="button">Crée un tag</a>
-<a class="btn btn-primary btn-lg" href="administration/newcategory" role="button">Crée une catégorie</a>
+
+<div class="row">
+	<div class="col-md-3 col-md-offset-1">
+		<a href="{{path('newarticle')}}">Crée</a>
+		<div class="panel panel-primary ">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tous les articles </h3>
+			</div>
+		  	<div class="panel-body">
+				<div class="list-group">
+					{% for article in articles %}
+						<p class="list-group-item">{{article.nom}}<a href="{{path('delete_entity',{'entity' : 'Article', 'id': article.id})}}">Supprimer</a></p>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3 ">
+		<a href="{{path('newcategory')}}">Crée</a>
+		<div class="panel panel-primary ">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tous les catégories</h3>
+			</div>
+		  	<div class="panel-body">
+				<div class="list-group">
+					{% for categorie in categories %}
+						<p class="list-group-item">{{categorie.nom}}<a href="{{path('delete_entity',{'entity' : 'Category', 'id':categorie.id})}}">Supprimer</a></p>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 ">
+		<a href="{{path('newtag')}}">Crée</a>
+		<div class="panel panel-primary ">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tous les tags</h3>
+			</div>
+		  	<div class="panel-body">
+				<div class="list-group">
+					{% for tag in tags %}
+						<p class="list-group-item">{{tag.nom}} <a href="{{path('delete_entity',{'entity' : 'Tag', 'id' : tag.id})}}">Supprimer</a></p>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
 {% endblock %}

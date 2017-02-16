@@ -3,13 +3,18 @@
 {% block body %}
 <div class="container">
 	<div class="row">
-		<div class="col-sm-8 blog-main">
-			<div class="blog-post">
-				<h2 class="blog-post-title">{{article.nom}}</h2>
-				<p class="blog-post-meta">{{article.dateParution|date('d-m-Y')}} par </p>
-				<p>Tags : {% for tag in article.tags %} {{tag.nom}} {% endfor %}</p>
-				<p>Catégorie : {{article.categorie.nom }} </p>
-				{{article.contenu|raw}}
+		<div class="col-md-12">
+			<div class="panel panel-primary ">
+				<div class="panel-heading">
+					<p>{{article.nom}} Publié le {{article.dateParution|date('d-m-Y')}} par {{article.auteur.username}}.</p>
+				</div>
+				<div class="panel-body">
+					{{article.contenu|raw}}
+				</div>
+				<div class="panel-footer">
+					<p>Tags : {% for tag in article.tags %} {{tag.nom}} {% endfor %}</p>
+					<p>Catégorie : <a href="{{path('detail_categorie', {'id': article.categorie.id })}}">{{article.categorie.nom }}</a> </p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -28,17 +33,19 @@
 				{{form_widget(form.submit, {'label':'Creer','attr':{'class':'btn waves-effect waves-light'}})}}
 			{{ form_end(form)}}
 		</div>
-		<div class="block-content">
-			<div class="row">
-					 <div class="col s8 ">
-						{% for commentaire in article.commentaires%}
-							<p>{{commentaire.auteur}}</p>
-							<p>{{commentaire.contenu}}</p>
-							<p>{{commentaire.dateParution|date('d-m-Y')}}</p>
-						{% endfor %}
-					</div>
+		{% for commentaire in article.commentaires%}
+		<div class="col-md-10 col-md-offset-1">
+		
+			<div class="panel panel-primary ">
+				<div class="panel-heading">
+				<h3 class="panel-title">Commentaire de <b>{{commentaire.auteur}}</b> le {{commentaire.dateParution|date('d-m-Y')}}</h3>
 				</div>
+				<div class="panel-body">
+					{{commentaire.contenu}}
+				</div>
+			</div>
 		</div>
+		{% endfor %}
 	</div>
 </div>
 {% endblock %}

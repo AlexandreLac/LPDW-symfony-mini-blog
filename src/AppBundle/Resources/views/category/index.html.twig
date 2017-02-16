@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="list-group">
+			{% if categories is not empty %}
+				{% for categorie in categories %}
+					<a href="{{path('detail_categorie', {'id': categorie.id })}}" class="list-group-item">{{categorie.nom}}</a>
+				{% endfor %}
+			{% else %}
+				<p>Il n'y a pas de catégorie</p>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

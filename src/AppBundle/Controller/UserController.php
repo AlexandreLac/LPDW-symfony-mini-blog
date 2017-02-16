@@ -36,11 +36,18 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/administration")
+     * @Route("/administration", name="admin")
      */
     public function adminAction()
     {
-        return $this->render('AppBundle:admin:index.html.twig');
+        $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->getAllCategories()->getResult();
+        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getAllAdmin()->getResult();
+        $tags = $this->getDoctrine()->getRepository('AppBundle:Tag')->getAll()->getResult();
+        return $this->render('AppBundle:admin:index.html.twig', array(
+            'articles' => $articles,
+            'tags' => $tags,
+            'categories' => $categories
+        ));
     }
 
     /**

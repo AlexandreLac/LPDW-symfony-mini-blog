@@ -19,9 +19,9 @@
         <tbody>
 			{% for article in articles%}
 				<tr>
-					<td><a href="articles/{{article.id}}">{{article.nom}}</a></td>
-					<td>{{article.categorie.nom}}</td>
-					<td></td>
+					<td><a href="{{path('detail_article', {'id': article.id })}}">{{article.nom}}</a></td>
+					<td><a href="{{path('detail_categorie', {'id': article.categorie.id })}}">{{article.categorie.nom}}</a></td>
+					<td>{% for tag in article.tags %} {{tag.nom}} {% endfor %}</td>
 					<td>{{article.dateParution|date('d-m-Y')}}</td>
 				</tr>
 			{% endfor %}

@@ -10,7 +10,14 @@ namespace AppBundle\Repository;
  */
 class TagRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function getTag(){
+	public function getAll(){
+		return $this
+            ->createQueryBuilder('t')
+            ->getQuery()
+        ;	
+	}
+
+	public function getTags(){
 		return $this
             ->createQueryBuilder('t')
         ;	

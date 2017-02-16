@@ -26,9 +26,6 @@ security:
         # secured_area:
         #     pattern: ^/
         #     anonymous: ~
-            logout:
-                path:   /logout
-                target: /articles
 
         main:
             anonymous: 
@@ -39,6 +36,9 @@ security:
                 login_path: login
                 check_path: login_check
                 default_target_path: articles
+            logout:
+                path:   /logout
+                target: /
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -57,6 +57,4 @@ security:
         # require ROLE_ADMIN for /admin*
         # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/administration, roles: ROLE_USER }
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        - { path: ^/administration, roles: ROLE_ADMIN }

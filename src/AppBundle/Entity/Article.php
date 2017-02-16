@@ -63,7 +63,7 @@ class Article
 
      /**
      * Many Articles have Many Tags.
-     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinTable(name="articles_tags",
      *      joinColumns={@ORM\JoinColumn(name="articles_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tags_id", referencedColumnName="id")}
@@ -73,7 +73,7 @@ class Article
 
     /**
      * Many User have Many Commentaires.
-     * @ORM\ManyToMany(targetEntity="Commentaire")
+     * @ORM\ManyToMany(targetEntity="Commentaire", cascade={"remove"})
      * @ORM\JoinTable(name="article_commentaires",
      *      joinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="commentaires_id", referencedColumnName="id", unique=true)}
@@ -83,7 +83,6 @@ class Article
 
     public function __construct() {
         $this->tags = new ArrayCollection();
-        $this->setDateParution(new \DateTime());
         $this->commentaires = new ArrayCollection();
     }
 

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Mini Blog{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
@@ -11,7 +11,6 @@
 
     </head>
     <body>
-    <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -25,26 +24,26 @@
         <div class="navbar-collapse collapse">
           
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">Accueil</a></li>
-            <li><a href="articles">Articles</a></li>
-            <li><a href="">Categorie</a></li>
+            <li><a href="{{path('homepage')}}">Accueil</a></li>
+            <li><a href="{{path('articles')}}">Articles</a></li>
+            <li><a href="{{path('categories')}}">Categories</a></li>
             {% if is_granted('ROLE_ADMIN') %}
-                <li><a href="administration">Admin</a></li>
+                <li><a href="{{path('admin')}}">Admin</a></li>
             {% endif %}
             {% if app.user %}
                 <li><a>{{app.user.username}}</a></li>
+                <li><a href="{{path('logout')}}">Logout</a></li>
             {% else %}
-                <li><a href="login">Login</a></li>
-                <li><a href="register">S'inscrire</a></li>
+                <li><a href="{{path('login')}}">Login</a></li>
+                <li><a href="{{path('user_registration')}}">S'inscrire</a></li>
             {% endif %}
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
 
     <div class="header-site">
-        <h1 class="header-title">Mini Blog</h1>
-    </div>
+    </div></br></br>
         {% block body %}{% endblock %}
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="list-group">
+				{% if articles is not empty %}
+					{% for article in articles %}
+						<a href="{{path('detail_article', {'id': article.id })}}" class="list-group-item">{{article.nom}}</a>
+					{% endfor %}
+				{% else %}
+					<p>Il n'y a pas d'articles liées</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

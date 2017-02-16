@@ -18,8 +18,37 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 	public function getHome(){
 		return $this
             ->createQueryBuilder('a')
-            // ->orderBy('a.date_parution','DESC')
+            ->where('a.dateParution < CURRENT_TIMESTAMP()')
+            ->orderBy('a.dateParution','DESC')
+            ->setMaxResults( 5 )
             ->getQuery()
+        ;	
+	}
+
+	public function getAll(){
+		return $this
+            ->createQueryBuilder('a')
+            ->where('a.dateParution < CURRENT_TIMESTAMP()')
+            ->orderBy('a.dateParution','DESC')
+            ->getQuery()
+        ;
+	}
+
+    public function getAllAdmin(){
+        return $this
+            ->createQueryBuilder('a')
+            ->getQuery()
+        ;
+    }
+
+	public function getArticleByCategorie($id){
+		return $this
+            ->createQueryBuilder('a')
+            ->where('a.categorie = :id')
+            ->andwhere('a.dateParution < CURRENT_TIMESTAMP()')
+		    ->setParameter('id', $id)
+		    ->orderBy('a.dateParution', 'DESC')
+		    ->getQuery()
         ;	
 	}
 }
