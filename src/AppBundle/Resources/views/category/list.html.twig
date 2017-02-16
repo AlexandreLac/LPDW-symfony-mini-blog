@@ -6,7 +6,7 @@
 			<div class="list-group">
 				{% if articles is not empty %}
 					{% for article in articles %}
-						<a href="{{path('detail_article', {'id': article.id })}}" class="list-group-item">{{article.nom}}</a>
+						<a href="{{path('detail_article', {'id': article.id })}}" class="list-group-item">{{article.nom}} Nombre de commentaire sur l'article : <b>{{count(article.id)}}</b></a>
 					{% endfor %}
 				{% else %}
 					<p>Il n'y a pas d'articles liées</p>

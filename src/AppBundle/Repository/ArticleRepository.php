@@ -51,4 +51,16 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 		    ->getQuery()
         ;	
 	}
+
+    public function GetNbCommentaire($id){
+        return $this
+            ->createQueryBuilder('a')
+            ->select('count(c.id)')
+            ->join('a.commentaires','c')
+            ->where('a.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }
