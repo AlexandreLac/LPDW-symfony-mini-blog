@@ -73,7 +73,7 @@ class Article
 
     /**
      * Many User have Many Commentaires.
-     * @ORM\ManyToMany(targetEntity="Commentaire", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="Commentaire", cascade={"remove"}, orphanRemoval=true)
      * @ORM\JoinTable(name="article_commentaires",
      *      joinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="commentaires_id", referencedColumnName="id", unique=true)}

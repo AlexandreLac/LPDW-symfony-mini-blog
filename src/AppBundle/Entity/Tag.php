@@ -32,11 +32,6 @@ class Tag
      */
     private $nom;
 
-
-    public function __construct() {
-        // $this->articles = new ArrayCollection();
-    }
-
     /**
      * Get id
      *

@@ -11,7 +11,8 @@
 		  	<div class="panel-body">
 				<div class="list-group">
 					{% for article in articles %}
-						<p class="list-group-item">{{article.nom}}<a href="{{path('delete_entity',{'entity' : 'Article', 'id': article.id})}}">Supprimer</a></p>
+						<a href="{{path('detail_article', {'id': article.id })}}" class="list-group-item">{{article.nom}}</a>
+						<a href="{{path('delete_entity',{'entity' : 'Article', 'id': article.id})}}">Supprimer</a>
 					{% endfor %}
 				</div>
 			</div>
@@ -27,7 +28,8 @@
 		  	<div class="panel-body">
 				<div class="list-group">
 					{% for categorie in categories %}
-						<p class="list-group-item">{{categorie.nom}}<a href="{{path('delete_entity',{'entity' : 'Category', 'id':categorie.id})}}">Supprimer</a></p>
+						<a href="{{path('detail_categorie', {'id': categorie.id })}}" class="list-group-item">{{categorie.nom}}</a>
+						<a href="{{path('delete_entity',{'entity' : 'Category', 'id':categorie.id})}}">Supprimer</a>
 					{% endfor %}
 				</div>
 			</div>
@@ -42,7 +44,8 @@
 		  	<div class="panel-body">
 				<div class="list-group">
 					{% for tag in tags %}
-						<p class="list-group-item">{{tag.nom}} <a href="{{path('delete_entity',{'entity' : 'Tag', 'id' : tag.id})}}">Supprimer</a></p>
+						<p class="list-group-item">{{tag.nom}} </p>
+						<a href="{{path('delete_entity',{'entity' : 'Tag', 'id' : tag.id})}}">Supprimer</a>
 					{% endfor %}
 				</div>
 			</div>
